@@ -52,7 +52,7 @@ void	malloc_mutex(t_input *param, pthread_t *th, t_philo *ph)
 	memset(fork, 0, sizeof(pthread_mutex_t) * param->n_phi);
 	while (++i < param->n_phi)
 	{
-		if (pthread_mutex_init(&fork[i], NULL))
+		if (pthread_mutex_init(&fork[i], NULL) != 0)
 		{
 			free(param);
 			ft_error(th, ph, "Fail to initialize pthread_mutex");
@@ -87,5 +87,6 @@ void	ft_mutex_init(t_input *param, pthread_t *th, t_philo *ph)
 		ph[i].display = &display;
 		ph[i].check = &check;
 		ph[i].is_eat = is_eat;
+		ph[i].is_die = 0;
 	}
 }

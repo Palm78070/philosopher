@@ -29,6 +29,7 @@ typedef struct s_philo
 	t_input	*input;
 	int	no;
 	int	n_meal;
+	int	is_die;
 	int	*is_eat;
 	unsigned long	lastmeal;
 }	t_philo;
@@ -52,6 +53,9 @@ void	ft_sleep(t_philo *ph);
 //time.c
 unsigned long	current_time(void);
 unsigned long	timestamp(t_philo *ph);
+//utils.c
+int	ft_isdigit(char c);
+void	check_input(int argc, char **argv);
 //clear.c
 void    destroy_mutex(pthread_t *th, t_philo *ph);
 void	ft_clear(pthread_t *th, t_philo *ph);

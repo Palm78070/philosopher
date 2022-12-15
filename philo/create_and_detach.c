@@ -26,6 +26,7 @@ static int	is_dead(t_philo *ph, int i)
 {
 	if (timestamp(ph) - ph[i].lastmeal > (unsigned long)ph[i].input->t_die)
 	{
+		ph[i].is_die = 1;
 		ft_display(&ph[i], timestamp(ph), "died");
 		return (1);
 	}
@@ -41,6 +42,7 @@ static void	detach_all_thread(pthread_t *th, t_philo *ph)
 	{
 		if (pthread_detach(th[i]))
 			ft_error(th, ph, "Error in detaching thread\n");
+		pthread_mutex_destroy(ph[i].fork);
 	}
 }
 
@@ -55,6 +57,8 @@ void	create_and_detach(pthread_t *th, t_philo *ph)
 	{
 		if (pthread_create(&th[i], NULL, routine, &ph[i]))
 			ft_error(th, ph, "Error in creating p_thread\n");
+		if (pthread_join(th[i], NULL))
+			ft_error(th, ph, "Error in joining p_thread\n");
 		usleep(100);
 	}
 	i = 0;

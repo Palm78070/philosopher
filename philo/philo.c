@@ -13,10 +13,9 @@ void	*routine(void *arg)
 
 	ph = (t_philo *)arg;
 	ph->lastmeal = timestamp(ph);
-	while (1)
+	while (!ph->is_die)
 	{
 		ft_eat(ph);
-		usleep(20);
 		if (*ph->is_eat == 0)
 			ft_display(ph, timestamp(ph), "is sleeping");
 		usleep(ph->input->t_sleep * 1000);
@@ -35,8 +34,9 @@ int	main(int argc, char **argv)
 	if (argc < 5 || argc > 6)
 	{
 		printf("Error param: n_philo time_die time_eat time_sleep n_eat\n");
-		exit(0);
+		exit(EXIT_FAILURE);
 	}
+	check_input(argc, argv);
 	param = (t_input *)malloc(sizeof(t_input));
 	input_init(param, argc - 1, argv);
 	th = (pthread_t *)malloc(sizeof(pthread_t) * param->n_phi);

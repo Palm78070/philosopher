@@ -8,6 +8,7 @@ SRCS = philo.c \
 	init.c \
 	time.c \
 	create_and_detach.c \
+	utils.c \
 	action.c \
 	clear.c \
 
