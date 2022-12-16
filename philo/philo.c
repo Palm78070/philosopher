@@ -2,6 +2,8 @@
 
 void	ft_display(t_philo *ph, unsigned long timestamp, char *s)
 {
+	if (*ph->finish == 1)
+		return ;
 	pthread_mutex_lock(ph->display);
 	printf("%lu ms Philosopher %i %s\n", timestamp, ph->no, s);
 	pthread_mutex_unlock(ph->display);
@@ -13,13 +15,16 @@ void	*routine(void *arg)
 
 	ph = (t_philo *)arg;
 	ph->lastmeal = timestamp(ph);
-	while (!ph->is_die)
+	while (*ph->finish != 1)
 	{
+		//check_dead(ph);
+		if (*ph->finish == 1)
+			break ;
 		ft_eat(ph);
-		if (*ph->is_eat == 0)
+		if (*ph->is_eat == 0 && *ph->finish != 1)
 			ft_display(ph, timestamp(ph), "is sleeping");
 		usleep(ph->input->t_sleep * 1000);
-		if (*ph->is_eat == 0)
+		if (*ph->is_eat == 0 && *ph->finish != 1)
 			ft_display(ph, timestamp(ph), "is thinking");
 	}
 	return (NULL);

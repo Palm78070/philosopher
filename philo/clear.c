@@ -28,6 +28,10 @@ void	ft_clear(pthread_t *th, t_philo *ph)
 			free(ph->fork);
 		if (ph->input)
 			free(ph->input);
+		if (ph->finish)
+			free(ph->finish);
+		if (ph->is_eat)
+			free(ph->is_eat);
 		free(ph);
 	}
 }

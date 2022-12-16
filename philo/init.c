@@ -37,7 +37,34 @@ void	check_struct(t_input *param, pthread_t *th, t_philo *ph)
 	memset(ph, 0, param->n_phi * sizeof(t_philo));
 }
 
-void	malloc_mutex(t_input *param, pthread_t *th, t_philo *ph)
+static void	philo_state_init(t_input *param, pthread_t *th, t_philo *ph)
+{
+	int	*is_eat;
+	int	*finish;
+	int	i;
+
+	i = -1;
+	is_eat = (int *)malloc(sizeof(int));
+	finish = (int *)malloc(sizeof(int));
+	if (!is_eat || !finish)
+	{
+		free(param);
+		ft_error(th, ph, "Error in allocating malloc for philo state");
+	}
+	memset(is_eat, 0, sizeof(int));
+	memset(finish, 0, sizeof(int));
+	while (++i < param->n_phi)
+	{
+		ph[i].is_eat = is_eat;
+		ph[i].finish = finish;
+		ph[i].no = i + 1;
+		ph[i].n_meal = 0;
+		ph[i].input = param;
+		ph[i].lastmeal = 0;
+	}
+}
+
+static pthread_mutex_t	*malloc_mutex_fork(t_input *param, pthread_t *th, t_philo *ph)
 {
 	int	i;
 	pthread_mutex_t	*fork;
@@ -47,36 +74,31 @@ void	malloc_mutex(t_input *param, pthread_t *th, t_philo *ph)
 	if (!fork)
 	{
 		free(param);
-		ft_error(th, ph, "Error in allocating struct pthread_mutex_t");
+		ft_error(th, ph, "Error in allocating malloc for mutex fork");
 	}
 	memset(fork, 0, sizeof(pthread_mutex_t) * param->n_phi);
-	while (++i < param->n_phi)
+	/*while (++i < param->n_phi)
 	{
 		if (pthread_mutex_init(&fork[i], NULL) != 0)
 		{
 			free(param);
-			ft_error(th, ph, "Fail to initialize pthread_mutex");
+			ft_error(th, ph, "Fail to initialize pthread_mutex fork");
 		}
 		ph[i].fork = &fork[i];
-		ph[i].no = i + 1;
-		ph[i].n_meal = 0;
-		ph[i].input = param;
-		ph[i].lastmeal = 0;
-	}
+	}*/
+	return (fork);
 }
 
 void	ft_mutex_init(t_input *param, pthread_t *th, t_philo *ph)
 {
-	int	*is_eat;
 	int	i;
 	pthread_mutex_t	display;
 	pthread_mutex_t	check;
+	pthread_mutex_t	*fork;
 
 	i = -1;
-	is_eat = (int *)malloc(sizeof(int));
-	memset(is_eat, 0, sizeof(int));
 	check_struct(param, th, ph);
-	malloc_mutex(param, th, ph);
+	fork = malloc_mutex_fork(param, th, ph);
 	if (pthread_mutex_init(&display, NULL) || pthread_mutex_init(&check, NULL))
 	{
 		free(param);
@@ -84,9 +106,14 @@ void	ft_mutex_init(t_input *param, pthread_t *th, t_philo *ph)
 	}
 	while (++i < param->n_phi)
 	{
+		if (pthread_mutex_init(&fork[i], NULL) != 0)
+		{
+			free(param);
+			ft_error(th, ph, "Fail to initialize pthread_mutex fork");
+		}
+		ph[i].fork = &fork[i];
 		ph[i].display = &display;
 		ph[i].check = &check;
-		ph[i].is_eat = is_eat;
-		ph[i].is_die = 0;
 	}
+	philo_state_init(param, th, ph);
 }

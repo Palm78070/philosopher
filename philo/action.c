@@ -2,6 +2,8 @@
 
 void	ft_eat(t_philo *ph)
 {
+	if (*ph->finish == 1)
+		return ;
 	pthread_mutex_lock(ph->check);
 	pthread_mutex_lock(&ph->fork[ph->no - 1]);
 	ft_display(ph, timestamp(ph), "has taken a left fork");
