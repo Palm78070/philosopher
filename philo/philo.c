@@ -17,7 +17,6 @@ void	*routine(void *arg)
 	ph->lastmeal = timestamp(ph);
 	while (*ph->finish != 1)
 	{
-		//check_dead(ph);
 		if (*ph->finish == 1)
 			break ;
 		ft_eat(ph);
@@ -47,7 +46,7 @@ int	main(int argc, char **argv)
 	th = (pthread_t *)malloc(sizeof(pthread_t) * param->n_phi);
 	ph = (t_philo *)malloc(sizeof(t_philo) * param->n_phi);
 	ft_mutex_init(param, th, ph);
-	create_and_detach(th, ph);
+	create_and_join(th, ph);
 	ft_clear(th, ph);
 	return (0);
 }

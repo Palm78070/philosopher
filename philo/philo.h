@@ -29,6 +29,7 @@ typedef struct s_philo
 	t_input	*input;
 	int	no;
 	int	n_meal;
+	int	*count_eat;
 	int	*finish;
 	int	*is_eat;
 	unsigned long	lastmeal;
@@ -44,9 +45,8 @@ void	input_init(t_input *param, int n, char **argv);
 void	check_struct(t_input *param, pthread_t *th, t_philo *ph);
 void    ft_mutex_init(t_input *param, pthread_t *th, t_philo *ph);
 //mutex.c
-//void	detach_all_thread(pthread_t *th, t_philo *ph);
-void	create_and_detach(pthread_t *th, t_philo *ph);
-void	check_dead(t_philo *ph);
+void	create_and_join(pthread_t *th, t_philo *ph);
+//void	check_dead(t_philo *ph);
 //action.c
 int	can_eat(t_philo *ph);
 void	ft_eat(t_philo *ph);

@@ -24,6 +24,10 @@ void	ft_clear(pthread_t *th, t_philo *ph)
 		free(th);
 	if (ph)
 	{
+		if (ph->display)
+			free(ph->display);
+		if (ph->check)
+			free(ph->check);
 		if (ph->fork)
 			free(ph->fork);
 		if (ph->input)
@@ -32,6 +36,8 @@ void	ft_clear(pthread_t *th, t_philo *ph)
 			free(ph->finish);
 		if (ph->is_eat)
 			free(ph->is_eat);
+		if (ph->count_eat)
+			free(ph->count_eat);
 		free(ph);
 	}
 }
