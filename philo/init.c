@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/18 01:17:47 by rthammat          #+#    #+#             */
+/*   Updated: 2022/12/18 01:24:48 by rthammat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	input_init(t_input *param, int n, char **argv)
@@ -39,9 +51,6 @@ void	check_struct(t_input *param, pthread_t *th, t_philo *ph)
 
 static void	philo_state_init(t_input *param, pthread_t *th, t_philo *ph)
 {
-	//int	*is_eat;
-	//int	*finish;
-	//int	*count_eat;
 	int	i;
 
 	i = -1;
@@ -66,14 +75,14 @@ static void	philo_state_init(t_input *param, pthread_t *th, t_philo *ph)
 		}
 		ph[i].no = i + 1;
 		ph[i].n_meal = 0;
-		//ph[i].input = param;
 		ph[i].lastmeal = 0;
 	}
 }
 
-static pthread_mutex_t	*malloc_mutex_fork(t_input *param, pthread_t *th, t_philo *ph)
+static pthread_mutex_t	*malloc_mutex_fork(t_input *param,
+		pthread_t *th, t_philo *ph)
 {
-	int	i;
+	int				i;
 	pthread_mutex_t	*fork;
 
 	i = -1;
@@ -89,18 +98,13 @@ static pthread_mutex_t	*malloc_mutex_fork(t_input *param, pthread_t *th, t_philo
 
 void	ft_mutex_init(t_input *param, pthread_t *th, t_philo *ph)
 {
-	int	i;
+	int				i;
 	pthread_mutex_t	*display;
 	pthread_mutex_t	*fork;
 
 	i = -1;
 	check_struct(param, th, ph);
 	display = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	/*if (!display)
-	{
-		free(param);
-		ft_error(th, ph, "Fail to allocating malloc pthread_mutex");
-	}*/
 	fork = malloc_mutex_fork(param, th, ph);
 	if (!display || pthread_mutex_init(display, NULL))
 	{

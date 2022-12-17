@@ -1,29 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_and_join.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/18 01:16:44 by rthammat          #+#    #+#             */
+/*   Updated: 2022/12/18 01:17:19 by rthammat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
-
-/*static int	eat_full(t_philo *ph)
-{
-	int	i;
-	int	count;
-	int	n_phi;
-
-	i = 0;
-	count = 0;
-	n_phi = ph[0].input->n_phi;
-	if (ph->input->n_eat == 0)
-		return (0);
-	while (i < n_phi)
-	{
-		if (ph[i].n_meal == ph[i].input->n_eat)
-			++count;
-		++i;
-	}
-	if (count == ph->input->n_phi)
-	{
-		*ph->finish = 1;
-		return (1);
-	}
-	return (0);
-}*/
 
 static int	is_dead(t_philo *ph, int i)
 {

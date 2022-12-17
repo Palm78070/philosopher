@@ -18,7 +18,7 @@ $(NAME): $(SRCS)
 	$(CC) $(CFLAGS) $^ -o $@
 
 norminette:
-	norminette -R CheckForbiddenHeader *.h *.c
+	norminette -R CheckForbiddenSourceHeader *.h *.c
 
 clean:
 	rm -rf *.dSYM $(NAME)
