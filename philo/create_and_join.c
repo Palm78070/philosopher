@@ -36,9 +36,8 @@ static int	is_dead(t_philo *ph, int i)
 	return (0);
 }
 
-void	unlock_and_destroy(pthread_t *th, t_philo *ph)
+void	unlock_and_destroy(t_philo *ph)
 {
-	(void)th;
 	int	i;
 
 	i = -1;
@@ -47,8 +46,6 @@ void	unlock_and_destroy(pthread_t *th, t_philo *ph)
 		pthread_mutex_unlock(ph[i].fork);
 		pthread_mutex_destroy(ph[i].fork);
 	}
-	pthread_mutex_unlock(ph->check);
-	pthread_mutex_destroy(ph->check);
 	pthread_mutex_destroy(ph->display);
 }
 
@@ -67,11 +64,8 @@ void	create_and_join(pthread_t *th, t_philo *ph)
 	}
 	i = 0;
 	while (!is_dead(ph, i))
-	{
 		i = (i + 1) % n_phi;
-		usleep(200);
-	}
-	unlock_and_destroy(th, ph);
+	unlock_and_destroy(ph);
 	i = -1;
 	while (++i < n_phi)
 	{

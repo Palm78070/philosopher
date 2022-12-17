@@ -25,7 +25,6 @@ typedef struct s_philo
 {
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	*display;
-	pthread_mutex_t	*check;
 	t_input	*input;
 	int	no;
 	int	n_meal;

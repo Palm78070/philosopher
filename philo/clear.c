@@ -26,8 +26,6 @@ void	ft_clear(pthread_t *th, t_philo *ph)
 	{
 		if (ph->display)
 			free(ph->display);
-		if (ph->check)
-			free(ph->check);
 		if (ph->fork)
 			free(ph->fork);
 		if (ph->input)

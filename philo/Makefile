@@ -7,7 +7,7 @@ SRCS = philo.c \
 	ft_atoi.c \
 	init.c \
 	time.c \
-	create_and_detach.c \
+	create_and_join.c \
 	utils.c \
 	action.c \
 	clear.c \

@@ -39,31 +39,34 @@ void	check_struct(t_input *param, pthread_t *th, t_philo *ph)
 
 static void	philo_state_init(t_input *param, pthread_t *th, t_philo *ph)
 {
-	int	*is_eat;
-	int	*finish;
-	int	*count_eat;
+	//int	*is_eat;
+	//int	*finish;
+	//int	*count_eat;
 	int	i;
 
 	i = -1;
-	is_eat = (int *)malloc(sizeof(int));
-	finish = (int *)malloc(sizeof(int));
-	count_eat = (int *)malloc(sizeof(int));
-	if (!is_eat || !finish || !count_eat)
+	ph[0].is_eat = (int *)malloc(sizeof(int));
+	ph[0].finish = (int *)malloc(sizeof(int));
+	ph[0].count_eat = (int *)malloc(sizeof(int));
+	if (!ph[0].is_eat || !ph[0].finish || !ph[0].count_eat)
 	{
 		free(param);
 		ft_error(th, ph, "Error in allocating malloc for philo state");
 	}
-	memset(is_eat, 0, sizeof(int));
-	memset(finish, 0, sizeof(int));
-	memset(count_eat, 0, sizeof(int));
+	memset(ph[0].is_eat, 0, sizeof(int));
+	memset(ph[0].finish, 0, sizeof(int));
+	memset(ph[0].count_eat, 0, sizeof(int));
 	while (++i < param->n_phi)
 	{
-		ph[i].is_eat = is_eat;
-		ph[i].finish = finish;
+		if (i != 0)
+		{
+			ph[i].is_eat = ph[0].is_eat;
+			ph[i].finish = ph[0].finish;
+			ph[i].count_eat = ph[0].count_eat;
+		}
 		ph[i].no = i + 1;
 		ph[i].n_meal = 0;
-		ph[i].count_eat = count_eat;
-		ph[i].input = param;
+		//ph[i].input = param;
 		ph[i].lastmeal = 0;
 	}
 }
@@ -88,20 +91,18 @@ void	ft_mutex_init(t_input *param, pthread_t *th, t_philo *ph)
 {
 	int	i;
 	pthread_mutex_t	*display;
-	pthread_mutex_t	*check;
 	pthread_mutex_t	*fork;
 
 	i = -1;
 	check_struct(param, th, ph);
 	display = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	check = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (!display || !check)
+	/*if (!display)
 	{
 		free(param);
 		ft_error(th, ph, "Fail to allocating malloc pthread_mutex");
-	}
+	}*/
 	fork = malloc_mutex_fork(param, th, ph);
-	if (pthread_mutex_init(display, NULL) || pthread_mutex_init(check, NULL))
+	if (!display || pthread_mutex_init(display, NULL))
 	{
 		free(param);
 		ft_error(th, ph, "Fail to initialize pthread_mutex");
@@ -115,7 +116,7 @@ void	ft_mutex_init(t_input *param, pthread_t *th, t_philo *ph)
 		}
 		ph[i].fork = fork;
 		ph[i].display = display;
-		ph[i].check = check;
+		ph[i].input = param;
 	}
 	philo_state_init(param, th, ph);
 }
