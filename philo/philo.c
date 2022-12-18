@@ -6,7 +6,7 @@
 /*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 13:24:26 by rthammat          #+#    #+#             */
-/*   Updated: 2022/12/18 14:18:03 by rath             ###   ########.fr       */
+/*   Updated: 2022/12/18 22:00:52 by rthammat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	*routine(void *arg)
 		if (*ph->finish == 1)
 			break ;
 		ft_eat(ph);
-		if (*ph->is_eat == 0 && *ph->finish != 1)
+		if (*ph->finish != 1)
 			ft_display(ph, timestamp(ph), "is sleeping");
-		usleep(ph->input->t_sleep * 1000);
-		if (*ph->is_eat == 0 && *ph->finish != 1)
+		super_sleep(ph->input->t_sleep);
+		if (*ph->finish != 1)
 			ft_display(ph, timestamp(ph), "is thinking");
 	}
 	return (NULL);

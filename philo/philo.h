@@ -6,7 +6,7 @@
 /*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 00:52:01 by rthammat          #+#    #+#             */
-/*   Updated: 2022/12/18 01:15:58 by rthammat         ###   ########.fr       */
+/*   Updated: 2022/12/18 21:36:57 by rthammat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int						can_eat(t_philo *ph);
 void					ft_eat(t_philo *ph);
 void					ft_sleep(t_philo *ph);
 //time.c
+void					super_sleep(int ms);
 unsigned long			current_time(void);
 unsigned long			timestamp(t_philo *ph);
 //utils.c

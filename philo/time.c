@@ -6,11 +6,20 @@
 /*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 13:25:14 by rthammat          #+#    #+#             */
-/*   Updated: 2022/12/18 13:25:21 by rthammat         ###   ########.fr       */
+/*   Updated: 2022/12/18 21:50:52 by rthammat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	super_sleep(int ms)
+{
+	long int	time;
+
+	time = current_time();
+	while ((int)(current_time() - time) < ms)
+		usleep(ms / 10);
+}
 
 unsigned long	current_time(void)
 {
