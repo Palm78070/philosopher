@@ -6,7 +6,7 @@
 /*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 13:24:26 by rthammat          #+#    #+#             */
-/*   Updated: 2022/12/18 13:25:04 by rthammat         ###   ########.fr       */
+/*   Updated: 2022/12/18 14:18:03 by rath             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int argc, char **argv)
 	check_input(argc, argv);
 	param = (t_input *)malloc(sizeof(t_input));
 	input_init(param, argc - 1, argv);
-	th = (pthread_t *)malloc(sizeof(pthread_t) * param->n_phi);
+	th = (pthread_t *)malloc(sizeof(pthread_t) * (param->n_phi + 1));
 	ph = (t_philo *)malloc(sizeof(t_philo) * param->n_phi);
 	ft_mutex_init(param, th, ph);
 	create_and_join(th, ph);

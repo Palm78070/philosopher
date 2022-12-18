@@ -6,7 +6,7 @@
 /*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 01:17:47 by rthammat          #+#    #+#             */
-/*   Updated: 2022/12/18 13:24:06 by rthammat         ###   ########.fr       */
+/*   Updated: 2022/12/18 14:18:48 by rath             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	check_struct(t_input *param, pthread_t *th, t_philo *ph)
 		free(param);
 		ft_error(th, ph, "Error in allocating struct pthread_t");
 	}
-	memset(th, 0, sizeof(pthread_t));
+	memset(th, 0, sizeof(pthread_t) * (param->n_phi + 1));
 	if (!ph)
 	{
 		free(param);
