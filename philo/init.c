@@ -6,7 +6,7 @@
 /*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 01:17:47 by rthammat          #+#    #+#             */
-/*   Updated: 2022/12/18 01:24:48 by rthammat         ###   ########.fr       */
+/*   Updated: 2022/12/18 13:24:06 by rthammat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,9 @@ static void	philo_state_init(t_input *param, pthread_t *th, t_philo *ph)
 	memset(ph[0].count_eat, 0, sizeof(int));
 	while (++i < param->n_phi)
 	{
-		if (i != 0)
-		{
-			ph[i].is_eat = ph[0].is_eat;
-			ph[i].finish = ph[0].finish;
-			ph[i].count_eat = ph[0].count_eat;
-		}
+		ph[i].is_eat = ph[0].is_eat;
+		ph[i].finish = ph[0].finish;
+		ph[i].count_eat = ph[0].count_eat;
 		ph[i].no = i + 1;
 		ph[i].n_meal = 0;
 		ph[i].lastmeal = 0;

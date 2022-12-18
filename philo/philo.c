@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/18 13:24:26 by rthammat          #+#    #+#             */
+/*   Updated: 2022/12/18 13:25:04 by rthammat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	ft_display(t_philo *ph, unsigned long timestamp, char *s)
@@ -31,8 +43,8 @@ void	*routine(void *arg)
 
 int	main(int argc, char **argv)
 {
-	t_input	*param;
-	t_philo	*ph;
+	t_input		*param;
+	t_philo		*ph;
 	pthread_t	*th;
 
 	if (argc < 5 || argc > 6)
