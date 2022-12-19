@@ -6,7 +6,7 @@
 /*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 13:25:14 by rthammat          #+#    #+#             */
-/*   Updated: 2022/12/18 21:50:52 by rthammat         ###   ########.fr       */
+/*   Updated: 2022/12/19 12:05:54 by rthammat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	super_sleep(int ms)
 {
-	long int	time;
+	unsigned long	begin;
 
-	time = current_time();
-	while ((int)(current_time() - time) < ms)
+	begin = current_time();
+	while ((int)(current_time() - begin) < ms)
 		usleep(ms / 10);
 }
 
