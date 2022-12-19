@@ -6,7 +6,7 @@
 /*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 01:16:29 by rthammat          #+#    #+#             */
-/*   Updated: 2022/12/19 11:58:15 by rthammat         ###   ########.fr       */
+/*   Updated: 2022/12/19 21:25:12 by rthammat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	ft_eat(t_philo *ph)
 	if (*ph->finish == 1)
 		return ;
 	pthread_mutex_lock(&ph->fork[ph->no - 1]);
-	ft_display(ph, timestamp(ph), "has taken a left fork");
+	ft_display(ph, timestamp(ph), "has taken a fork");
 	pthread_mutex_lock(&ph->fork[ph->no % ph->input->n_phi]);
 	ph->lastmeal = timestamp(ph);
-	ft_display(ph, timestamp(ph), "has taken a right fork");
+	ft_display(ph, timestamp(ph), "has taken a fork");
 	ft_display(ph, timestamp(ph), "is eating");
 	ph->n_meal += 1;
 	if (ph->n_meal == ph->input->n_eat)
