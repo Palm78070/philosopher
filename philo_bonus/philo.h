@@ -24,24 +24,20 @@ typedef struct s_input
 
 typedef struct s_philo
 {
-	sem_t	*sem;
+	sem_t	*fork;
 	sem_t	*detach;
 	sem_t	*print;
-	//sem_t	*dead;
 	t_input	*input;
 	////////dummy//////////
 	pthread_t	th;
 	pid_t	child_die;
 	pid_t	*id;
 	pid_t	*child_id;
-	pid_t	parent;
 	//////////////
-	//int	no;
+	int	no;
 	int	n_meal;
 	int	*is_eat;
-	////////dummy//////////
-	int	count;
-	////////dummy//////////
+	int	*finish;
 	unsigned long	lastmeal;
 }	t_philo;
 

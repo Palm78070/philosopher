@@ -23,19 +23,19 @@ void	input_init(t_input *param, int n, char **argv)
 
 void	init_semaphore(t_philo *ph)
 {
-	if (sem_unlink("/philo") != 0)
+	int	n_phi;
+
+	n_phi = ph->n_phi;
+	if (sem_unlink("/fork") != 0)
 		ft_error(ph, "Error in unlink semaphore /philo");
 	if (sem_unlink("/detach") != 0)
 		ft_error(ph, "Error in unlink semaphore /detach");
 	if (sem_unlink("/print") != 0)
 		ft_error(ph, "Error in unlink semaphore /print");
-	/*if (sem_unlink("/dead") != 0)
-		ft_error(ph, "Error in unlink semaphore /dead");*/
-	ph->sem = sem_open("/philo", O_CREAT, 0644, 1);
-	ph->detach = sem_open("/detach", O_CREAT, 0644, 0);
+	ph->fork = sem_open("/fork", O_CREAT, 0644, n_phi);
+	ph->detach = sem_open("/detach", O_CREAT, 0644, (n_phi - 1) * (-1));
 	ph->print = sem_open("/print", O_CREAT, 0644, 1);
-	//ph->dead = sem_open("/dead", O_CREAT, 0644, 0);
-	if (ph->sem == SEM_FAILED || ph->detach == SEM_FAILED
+	if (ph->fork == SEM_FAILED || ph->detach == SEM_FAILED
 		|| ph->print == SEM_FAILED)
 	{
 		printf("error to initialize semaphore\n");
@@ -52,16 +52,16 @@ void	struct_init(t_input *param, t_philo *ph)
 	}
 	memset(ph, 0, sizeof(t_philo));
 	ph->input = param;
-	printf("n_phi %i\n", ph->input->n_phi);
 	init_semaphore(ph);
-	//ph->th = NULL;
+	ph->finish = (int *)malloc(sizeof(int));
 	ph->id = (pid_t *)malloc(sizeof(pid_t) * ph->input->n_phi);
 	ph->child_id = (pid_t *)malloc(sizeof(pid_t) * ph->input->n_phi);
-	if (!ph->id || !ph->child_id)
+	if (!ph->id || !ph->child_id || !ph->finish)
 		ft_error(ph, "Error in allocating id or child_id");
+	memset(ph->finish, 0, sizeof(int);
 	memset(ph->id, 0, sizeof(pid_t) * ph->input->n_phi);
 	memset(ph->child_id, 0, sizeof(pid_t) * ph->input->n_phi);
-	ph->count = 0;
 	ph->child_die = 0;
-	ph->parent = 0;
+	ph->no = 0;
+	ph->th = NULL;
 }

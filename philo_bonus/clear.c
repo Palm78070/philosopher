@@ -11,10 +11,12 @@ void	ft_clear(t_philo *ph)
 	{
 		if (ph->input)
 			free(ph->input);
-		/*if (ph->id)
+		 (ph->id)
 			free(ph->id);
-		if (ph->pid)
-			free(ph->pid);*/
+		if (ph->child_id)
+			free(ph->child_id);
+		if (ph->finish)
+			free(ph->finish);
 		free(ph);
 	}
 }

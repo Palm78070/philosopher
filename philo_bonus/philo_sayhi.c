@@ -1,25 +1,27 @@
 #include "philo.h"
 
-void	*child(void *arg)
+void  ft_display(t_philo *ph, unsigned long timestamp, char *s)
+{
+	if (ph->finish)
+		return ;
+	sem_wait(ph->print);
+	printf("%lu ms Philosopher %i %s\n", timestamp, ph->no, s);
+	sem_post(ph->print);
+}
+
+void	*routine(void *arg)
 {
 	t_philo	*ph;
 
 	ph = (t_philo *)arg;
-	while (ph->count < 5)
+	while (*ph->finish != 1)
 	{
-		if (sem_wait(ph->sem))
-		{
-			printf("Error in sem_wait\n");
-			exit(1);
-		}
-		printf("Child %i  Parent %i count %i\n", getpid(), getppid(), ph->count);
-		if (sem_post(ph->sem))
-		{
-			printf("Error in sem_post\n");
-			exit(1);
-		}
-		ph->count += 1;
-		sleep(1);
+		if (*ph->finish != 1)
+			ft_eat(ph);
+		if (*ph->finish != 1)
+			super_sleep(ph->input->t_sleep);
+		if (*ph->finish != 1)
+			ft_display(ph, timestamp(ph), "is thinking");
 	}
 	ph->child_die = 1;
 	printf("Out of loop to sem_post\n");
@@ -40,24 +42,28 @@ int	is_child(t_philo *ph)
 	return (0);
 }
 
-void	ft_child(t_philo *ph, pthread_t th, int detach_value)
+void	ft_child(t_philo *ph, int detach_value)
 {
-	if (pthread_create(&th, NULL, child, ph))
+	int	i;
+
+	i = 0;
+	if (pthread_create(&ph->th, NULL, routine, ph))
 	{
 		printf("Error in create thread\n");
 		exit(1);
 	}
+	while (!is_dead(ph, i))
+		i = i % ph->input->n_phi;
 	while (detach_value != 0)
 	{
 		sem_wait(ph->detach);
-		detach_value = pthread_detach(th);
+		detach_value = pthread_detach(ph->th);
 		if (detach_value)
 		{
 			printf("Error in detach thread\n");
 			exit(1);
 		}
 		printf("Child %i  Parent %i detach\n", getpid(), getppid());
-		ph->parent = getppid();
 	}
 	sem_post(ph->detach);
 	printf("after success detach\n");
@@ -70,35 +76,64 @@ void	ft_child(t_philo *ph, pthread_t th, int detach_value)
 	}
 }
 
-/*void	ft_parent(t_philo *ph)
+void	ft_parent(t_philo *ph)
 {
-	int	i;
-
 	printf("finish eating id %i\n", getpid());
 	sleep(1);
 	i = -1;
 	while (++i < ph->input->n_phi)
 	{
-		printf("kill child %i\n", getpid());
-			if (kill(ph->id[i], SIGKILL) != 0)
-			{
-				printf("Error in killing child %i\n", getpid());
-				exit(1);
-			}
+		if (ph->child_id[i] != 0)
+		{
+			printf("kill child %i\n", ph->child_id[i]);
+			if (kill(ph->child_id[i], SIGKILL) == 0)
+				printf("kill child success %i\n", ph->child_id[i]);
+		}
 	}
 	sem_close(ph->sem);
 	sem_close(ph->detach);
 	sem_close(ph->print);
 	free(ph->id);
 	ft_clear(ph);
-}*/
+	exit(EXIT_SUCCESS);
+}
+
+void	fork_process(t_philo *ph)
+{
+	int	i;
+
+	i = -1;
+	while (++i < ph->input->n_phi)
+	{
+		if (i > 0)
+			sleep(4);
+		ph->id[i] = fork();
+		if (ph->id[i] == 0)
+		{
+			ph->no = i + 1;
+			ft_child(ph, detach_value);
+			break;
+		}
+		else
+		{
+			ph->child_id[i] = ph->id[i];
+			printf("child id %i\n", ph->child_id[i]);
+		}
+	}
+	if (i == ph->input->n_phi)
+	{
+		pid_t w_pid = 0;
+		while (w_pid == 0)
+			w_pid = waitpid(-1, NULL, WNOHANG);
+	}
+	if (!is_child(ph))
+		ft_parent(ph);
+}
 
 int	main(int argc, char **argv)
 {
-	//pid_t	parent = 0;
 	t_input *param;
 	t_philo *ph;
-	pthread_t th = NULL;
 	int i;
 	int detach_value = -1;
 
@@ -112,16 +147,17 @@ int	main(int argc, char **argv)
 	input_init(param, argc - 1, argv);
 	i = -1;
 	struct_init(param, ph);
-	printf("n_phi %i\n", ph->input->n_phi);
-	while (++i < ph->input->n_phi)
+	fork_process(ph);
+	/*while (++i < ph->input->n_phi)
 	{
 		if (i > 0)
 			sleep(4);
 		ph->id[i] = fork();
 		if (ph->id[i] == 0)
 		{
+			ph->no = i + 1;
 			printf("Fork Child %i\n", getpid());
-			ft_child(ph, th, detach_value);
+			ft_child(ph, detach_value);
 			break;
 		}
 		else
@@ -139,45 +175,13 @@ int	main(int argc, char **argv)
 		}
 		printf("Out of w_pid loop\n");
 	}
-	/*else
-	{
-		if (pthread_create(&th, NULL, child, ph))
-		{
-			printf("Error in create thread\n");
-			exit(1);
-		}
-		while (detach_value != 0)
-		{
-			sem_wait(ph->detach);
-			detach_value = pthread_detach(th);
-			if (detach_value)
-			{
-				printf("Error in detach thread\n");
-				exit(1);
-			}
-			printf("Child %i  Parent %i detach\n", getpid(), getppid());
-		}
-		sem_post(ph->detach);
-		printf("after success detach\n");
-		if (ph->child_die)
-		{
-			printf("exit success %i\n", getpid());
-			exit(EXIT_SUCCESS);
-		}
-	}*/
-	//if (ph->id[0] != 0)
-	//if (!is_child(ph))
-	//if (ph->id[0] != 0)
 	if (!is_child(ph))
 	{
 		printf("finish eating id %i\n", getpid());
-		//printf("parent %i\n", ph->parent);
 		sleep(1);
-		//sem_post(ph->detach);
 		i = -1;
 		while (++i < ph->input->n_phi)
 		{
-			//if (ph->child_id[i] != ph->parent && ph->child_id[i] != ph->child_die)
 			if (ph->child_id[i] != 0)
 			{
 				printf("kill child %i\n", ph->child_id[i]);
@@ -185,11 +189,6 @@ int	main(int argc, char **argv)
 				{
 					printf("kill child success %i\n", ph->child_id[i]);
 				}
-				/*if (kill(ph->child_id[i], SIGKILL) != 0)
-				{
-					printf("Error in killing child %i\n", ph->child_id[i]);
-					exit(1);
-				}*/
 			}
 		}
 		sem_close(ph->sem);
@@ -198,6 +197,6 @@ int	main(int argc, char **argv)
 		free(ph->id);
 		ft_clear(ph);
 		exit(EXIT_SUCCESS);
-	}
+	}*/
 	return 0;
 }
