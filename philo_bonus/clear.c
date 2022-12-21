@@ -2,21 +2,18 @@
 
 void	ft_clear(t_philo *ph)
 {
-	int	i;
-	int	n_phi;
-
-	i = -1;
-	n_phi = ph->input->n_phi;
 	if (ph)
 	{
 		if (ph->input)
 			free(ph->input);
-		 (ph->id)
+		if (ph->id)
 			free(ph->id);
 		if (ph->child_id)
 			free(ph->child_id);
 		if (ph->finish)
 			free(ph->finish);
+		if (ph->th)
+			free(ph->th);
 		free(ph);
 	}
 }

@@ -22,21 +22,18 @@ void	ft_eat(t_philo *ph)
 {
 	if (*ph->finish == 1)
 		return;
-	sem_wait(ph->fork);
+	sem_wait(&ph->fork[ph->no - 1]);
 	ft_display(ph, timestamp(ph), "has taken a fork");
-	sem_wait(ph->fork);
+	sem_wait(&ph->fork[ph->no % ph->input->n_phi]);
 	ph->lastmeal = timestamp(ph);
 	ft_display(ph, timestamp(ph), "has taken a fork");
 	ft_display(ph, timestamp(ph), "is eating");
 	ph->n_meal += 1;
 	if (ph->n_meal == ph->input->n_eat)
 	{
-		sem_post(detach);
-		//*ph->count_eat += 1;
+		sem_post(ph->detach);
 	}
-	//if (*ph->count_eat == ph->input->n_phi)
-	//	*ph->finish = 1;
 	super_sleep(ph->input->t_eat);
-	sem_wait(ph->fork);
-	sem_wait(ph->fork);
+	sem_wait(&ph->fork[ph->no % ph->input->n_phi]);
+	sem_wait(&ph->fork[ph->no - 1]);
 }

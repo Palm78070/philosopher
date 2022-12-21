@@ -29,7 +29,7 @@ typedef struct s_philo
 	sem_t	*print;
 	t_input	*input;
 	////////dummy//////////
-	pthread_t	th;
+	pthread_t	*th;
 	pid_t	child_die;
 	pid_t	*id;
 	pid_t	*child_id;
@@ -48,19 +48,20 @@ void	*routine(void *arg);
 int	ft_atoi(const char *str);
 //init.c
 void	input_init(t_input *param, int n, char **argv);
+ void	init_semaphore(t_philo *ph);
 void	struct_init(t_input *param, t_philo *ph);
-//mutex.c
-//void	detach_all_thread(pthread_t *th, t_philo *ph);
-void	create_and_detach(pthread_t *th, t_philo *ph);
+//check_dead.c
+int	is_dead(t_philo *ph, int i);
+void	sem_post_all_detach(t_philo *ph);
+void	*check_dead(void *arg);
 //action.c
 int	can_eat(t_philo *ph);
 void	ft_eat(t_philo *ph);
 void	ft_sleep(t_philo *ph);
 //time.c
+void	super_sleep(int ms);
 unsigned long	current_time(void);
 unsigned long	timestamp(t_philo *ph);
-//sem.c
- void	init_semaphore(t_philo *ph);
 //clear.c
 void    destroy_mutex(pthread_t *th, t_philo *ph);
 void	ft_clear(t_philo *ph);

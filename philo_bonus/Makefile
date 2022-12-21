@@ -8,8 +8,7 @@ SRCS = philo_sayhi.c \
 	ft_atoi.c \
 	init.c \
 	time.c \
-	sem.c \
-	create_and_detach.c \
+	check_dead.c \
 	action.c \
 	clear.c \
 
