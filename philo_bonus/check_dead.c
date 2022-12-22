@@ -1,10 +1,11 @@
 #include "philo.h"
 
-int	is_dead(t_philo *ph, int i)
+//int	is_dead(t_philo *ph, int i)
+int	is_dead(t_philo *ph)
 {
-	if (timestamp(ph) - ph[i].lastmeal > (unsigned long)ph[i].input->t_die)
+	if (timestamp(ph) - ph->lastmeal > (unsigned long)ph->input->t_die)
 	{
-		ft_display(&ph[i], timestamp(ph), "died");
+		ft_display(ph, timestamp(ph), "died");
 		*ph->finish = 1;
 		return (1);
 	}
@@ -27,8 +28,11 @@ void	*check_dead(void *arg)
 
 	ph = (t_philo *)arg;
 	i = 0;
-	while (!is_dead(ph, i))
-		i = i % ph->input->n_phi;
+	while (1)
+	{
+		if (is_dead(ph))
+			break ;
+	}
 	if (pthread_detach(ph->th[1]))
 		ft_error(ph, "Error in detach th[1]");
 	sem_post_all_detach(ph);

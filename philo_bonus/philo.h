@@ -51,7 +51,7 @@ void	input_init(t_input *param, int n, char **argv);
  void	init_semaphore(t_philo *ph);
 void	struct_init(t_input *param, t_philo *ph);
 //check_dead.c
-int	is_dead(t_philo *ph, int i);
+int	is_dead(t_philo *ph);
 void	sem_post_all_detach(t_philo *ph);
 void	*check_dead(void *arg);
 //action.c

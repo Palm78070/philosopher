@@ -33,7 +33,7 @@ void	init_semaphore(t_philo *ph)
 	if (sem_unlink("/print") != 0)
 		ft_error(ph, "Error in unlink semaphore /print");
 	ph->fork = sem_open("/fork", O_CREAT, 0644, n_phi);
-	ph->detach = sem_open("/detach", O_CREAT, 0644, 1);
+	ph->detach = sem_open("/detach", O_CREAT, 0644, 0);
 	ph->print = sem_open("/print", O_CREAT, 0644, 1);
 	if (ph->fork == SEM_FAILED || ph->detach == SEM_FAILED
 		|| ph->print == SEM_FAILED)

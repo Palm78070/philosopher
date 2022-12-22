@@ -6,7 +6,7 @@
 /*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 01:16:44 by rthammat          #+#    #+#             */
-/*   Updated: 2022/12/19 13:09:48 by rthammat         ###   ########.fr       */
+/*   Updated: 2022/12/22 17:48:18 by rath             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ void	*check_dead(void *arg)
 	ph = (t_philo *)arg;
 	i = 0;
 	while (!is_dead(ph, i))
-		i = i % ph->input->n_phi;
+	{
+		++i;
+		if (i == ph->input->n_phi)
+			i = 0;
+	}
 	return (NULL);
 }
 

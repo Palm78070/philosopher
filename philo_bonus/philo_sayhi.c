@@ -17,7 +17,6 @@ void	*routine(void *arg)
 	ph->input->start_time = current_time();
 	while (*ph->finish != 1)
 	{
-		printf("finish %i\n", *ph->finish);
 		if (*ph->finish != 1)
 			ft_eat(ph);
 		if (*ph->finish != 1)
@@ -65,8 +64,12 @@ void	ft_child(t_philo *ph)
 			sem_wait(ph->detach);
 		if (ph->input->n_phi == 1)
 			sem_wait(ph->detach);*/
-		while (++i < ph->input->n_phi)
+		/*while (++i < ph->input->n_phi)
+		{
+			printf("In sem_wait loop\n");
 			sem_wait(ph->detach);
+		}*/
+		sem_wait(ph->detach);
 		detach_value = pthread_detach(ph->th[0]);
 		if (detach_value)
 			ft_error(ph, "Error in detach thread th[0]");
@@ -112,8 +115,8 @@ void	fork_process(t_philo *ph)
 	i = -1;
 	while (++i < ph->input->n_phi)
 	{
-		if (i > 0)
-			usleep(100);
+		//if (i > 0)
+		//	usleep(100);
 		ph->id[i] = fork();
 		if (ph->id[i] == 0)
 		{
