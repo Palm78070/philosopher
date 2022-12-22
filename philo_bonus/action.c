@@ -22,9 +22,11 @@ void	ft_eat(t_philo *ph)
 {
 	if (*ph->finish == 1)
 		return;
-	sem_wait(&ph->fork[ph->no - 1]);
+	//sem_wait(&ph->fork[ph->no - 1]);
+	sem_wait(ph->fork);
 	ft_display(ph, timestamp(ph), "has taken a fork");
-	sem_wait(&ph->fork[ph->no % ph->input->n_phi]);
+	//sem_wait(&ph->fork[ph->no % ph->input->n_phi]);
+	sem_wait(ph->fork);
 	ph->lastmeal = timestamp(ph);
 	ft_display(ph, timestamp(ph), "has taken a fork");
 	ft_display(ph, timestamp(ph), "is eating");
@@ -34,6 +36,8 @@ void	ft_eat(t_philo *ph)
 		sem_post(ph->detach);
 	}
 	super_sleep(ph->input->t_eat);
-	sem_wait(&ph->fork[ph->no % ph->input->n_phi]);
-	sem_wait(&ph->fork[ph->no - 1]);
+	sem_post(ph->fork);
+	sem_post(ph->fork);
+	//sem_wait(&ph->fork[ph->no % ph->input->n_phi]);
+	//sem_wait(&ph->fork[ph->no - 1]);
 }

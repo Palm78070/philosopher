@@ -66,7 +66,7 @@ void	ft_child(t_philo *ph)
 			sem_wait(ph->detach);*/
 		/*while (++i < ph->input->n_phi)
 		{
-			printf("In sem_wait loop\n");
+			printf("sem_wait loop\n");
 			sem_wait(ph->detach);
 		}*/
 		sem_wait(ph->detach);
@@ -79,7 +79,7 @@ void	ft_child(t_philo *ph)
 	printf("after success detach\n");
 	//if (ph->child_die)
 	//{
-		ph->child_die = getpid();
+		//ph->child_die = getpid();
 		//printf("child die %i\n", ph->child_die);
 		//printf("exit success %i\n", getpid());
 		exit(EXIT_SUCCESS);
