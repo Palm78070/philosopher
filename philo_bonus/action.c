@@ -33,7 +33,10 @@ void	ft_eat(t_philo *ph)
 	ph->n_meal += 1;
 	if (ph->n_meal == ph->input->n_eat)
 	{
-		sem_post(ph->detach);
+		printf("philo %i eat full\n", ph->no);
+		int i = -1;
+		while (++i < ph->input->n_phi)
+			sem_post(ph->detach);
 	}
 	super_sleep(ph->input->t_eat);
 	sem_post(ph->fork);

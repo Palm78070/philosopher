@@ -33,6 +33,7 @@ typedef struct s_philo
 	pid_t	child_die;
 	pid_t	*id;
 	pid_t	*child_id;
+	int	sem_value;
 	//////////////
 	int	no;
 	int	n_meal;

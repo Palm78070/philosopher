@@ -65,4 +65,5 @@ void	struct_init(t_input *param, t_philo *ph)
 	memset(ph->th, 0, sizeof(pthread_t) * 2);
 	ph->child_die = 0;
 	ph->no = 0;
+	ph->sem_value = 0;
 }

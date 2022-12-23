@@ -64,12 +64,12 @@ void	ft_child(t_philo *ph)
 			sem_wait(ph->detach);
 		if (ph->input->n_phi == 1)
 			sem_wait(ph->detach);*/
-		/*while (++i < ph->input->n_phi)
+		//while (++i < ph->input->n_phi)
+		while (++i < ph->input->n_phi)
 		{
-			printf("sem_wait loop\n");
 			sem_wait(ph->detach);
-		}*/
-		sem_wait(ph->detach);
+		}
+		//sem_wait(ph->detach);
 		detach_value = pthread_detach(ph->th[0]);
 		if (detach_value)
 			ft_error(ph, "Error in detach thread th[0]");
