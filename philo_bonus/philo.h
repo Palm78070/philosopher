@@ -27,6 +27,7 @@ typedef struct s_philo
 	sem_t	*fork;
 	sem_t	*detach;
 	sem_t	*print;
+	sem_t	*action;
 	t_input	*input;
 	////////dummy//////////
 	pthread_t	*th;

@@ -27,9 +27,9 @@ void	*routine(void *arg)
 		if (*ph->finish != 1)
 			ft_display(ph, timestamp(ph), "is thinking");
 	}
-	ph->child_die = 1;
+	/*ph->child_die = 1;
 	printf("Out of loop to sem_post\n");
-	sem_post(ph->detach);
+	sem_post(ph->detach);*/
 	return (NULL);
 }
 
@@ -46,30 +46,39 @@ int	is_child(t_philo *ph)
 	return (0);
 }
 
+void	*dead_dummy(void *arg)
+{
+	t_philo	*ph;
+
+	ph = (t_philo *)arg;
+	sem_wait(ph->action);
+	pthread_detach(ph->th[0]);
+	sem_post(ph->action);
+	exit(EXIT_SUCCESS);
+	return (NULL);
+}
+
 void	ft_child(t_philo *ph)
 {
 	int	detach_value;
 	int	i;
+	pthread_t	thx;
 
+	thx = NULL;
 	i = 0;
 	detach_value = -1;
 	if (pthread_create(&ph->th[0], NULL, routine, ph))
 		ft_error(ph, "Error in create thread");
 	if (pthread_create(&ph->th[1], NULL, check_dead, ph))
 		ft_error(ph, "Error in create thread");
+	//////////////////dummy/////////////////////////
+	pthread_create(&thx, NULL, &dead_dummy, ph);
+	//////////////////dummy/////////////////////////
 	while (detach_value != 0)
 	{
 		i = -1;
-		/*while (++i < ph->input->n_phi - 1)
-			sem_wait(ph->detach);
-		if (ph->input->n_phi == 1)
-			sem_wait(ph->detach);*/
-		//while (++i < ph->input->n_phi)
 		while (++i < ph->input->n_phi)
-		{
 			sem_wait(ph->detach);
-		}
-		//sem_wait(ph->detach);
 		detach_value = pthread_detach(ph->th[0]);
 		if (detach_value)
 			ft_error(ph, "Error in detach thread th[0]");
@@ -77,20 +86,13 @@ void	ft_child(t_philo *ph)
 	}
 	sem_post(ph->detach);
 	printf("after success detach\n");
-	//if (ph->child_die)
-	//{
-		//ph->child_die = getpid();
-		//printf("child die %i\n", ph->child_die);
-		//printf("exit success %i\n", getpid());
-		exit(EXIT_SUCCESS);
-	//}
+	exit(EXIT_SUCCESS);
 }
 
 void	ft_parent(t_philo *ph)
 {
 	int	i;
 
-	sleep(1);
 	i = -1;
 	while (++i < ph->input->n_phi)
 	{
@@ -115,8 +117,6 @@ void	fork_process(t_philo *ph)
 	i = -1;
 	while (++i < ph->input->n_phi)
 	{
-		//if (i > 0)
-		//	usleep(100);
 		ph->id[i] = fork();
 		if (ph->id[i] == 0)
 		{

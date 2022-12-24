@@ -26,17 +26,16 @@ void	init_semaphore(t_philo *ph)
 	int	n_phi;
 
 	n_phi = ph->input->n_phi;
-	if (sem_unlink("/fork") != 0)
-		ft_error(ph, "Error in unlink semaphore /fork");
-	if (sem_unlink("/detach") != 0)
-		ft_error(ph, "Error in unlink semaphore /detach");
-	if (sem_unlink("/print") != 0)
-		ft_error(ph, "Error in unlink semaphore /print");
+	sem_unlink("/fork");
+	sem_unlink("/detach");
+	sem_unlink("/print");
+	sem_unlink("/action");
 	ph->fork = sem_open("/fork", O_CREAT, 0644, n_phi);
 	ph->detach = sem_open("/detach", O_CREAT, 0644, 0);
 	ph->print = sem_open("/print", O_CREAT, 0644, 1);
+	ph->action = sem_open("/action", O_CREAT, 0644, 0);
 	if (ph->fork == SEM_FAILED || ph->detach == SEM_FAILED
-		|| ph->print == SEM_FAILED)
+		|| ph->print == SEM_FAILED || ph->action == SEM_FAILED)
 	{
 		printf("error to initialize semaphore\n");
 		exit(1);

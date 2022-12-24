@@ -19,6 +19,7 @@ void	sem_post_all_detach(t_philo *ph)
 	i = -1;
 	while (++i < ph->input->n_phi)
 	{
+		printf("post loop\n");
 		sem_post(ph->detach);
 	}
 }
@@ -37,7 +38,6 @@ void	*check_dead(void *arg)
 	}
 	if (pthread_detach(ph->th[1]))
 		ft_error(ph, "Error in detach th[1]");
-	//sem_post(ph->detach);
-	sem_post_all_detach(ph);
+	sem_post(ph->action);
 	return (NULL);
 }
