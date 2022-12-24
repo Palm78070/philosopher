@@ -6,7 +6,7 @@
 /*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 18:04:35 by rthammat          #+#    #+#             */
-/*   Updated: 2022/12/24 18:26:58 by rthammat         ###   ########.fr       */
+/*   Updated: 2022/12/24 20:28:36 by rthammat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	input_init(t_input *param, int n, char **argv)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!param)
@@ -74,7 +74,5 @@ void	struct_init(t_input *param, t_philo *ph)
 	memset(ph->id, 0, sizeof(pid_t) * ph->input->n_phi);
 	memset(ph->child_id, 0, sizeof(pid_t) * ph->input->n_phi);
 	memset(ph->th, 0, sizeof(pthread_t) * 2);
-	ph->child_die = 0;
 	ph->no = 0;
-	ph->sem_value = 0;
 }

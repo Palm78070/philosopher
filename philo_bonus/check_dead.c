@@ -6,7 +6,7 @@
 /*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 18:05:34 by rthammat          #+#    #+#             */
-/*   Updated: 2022/12/24 18:26:54 by rthammat         ###   ########.fr       */
+/*   Updated: 2022/12/24 21:06:34 by rthammat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	sem_post_all_detach(t_philo *ph)
 
 void	*check_dead(void *arg)
 {
-	int	i;
+	int		i;
 	t_philo	*ph;
 
 	ph = (t_philo *)arg;
@@ -48,5 +48,17 @@ void	*check_dead(void *arg)
 	if (pthread_detach(ph->th[1]))
 		ft_error(ph, "Error in detach th[1]");
 	sem_post(ph->dead);
+	return (NULL);
+}
+
+void	*ft_dead(void *arg)
+{
+	t_philo	*ph;
+
+	ph = (t_philo *)arg;
+	sem_wait(ph->dead);
+	pthread_detach(ph->th[0]);
+	sem_post(ph->dead);
+	exit(EXIT_SUCCESS);
 	return (NULL);
 }

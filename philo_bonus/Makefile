@@ -6,7 +6,7 @@
 #    By: rthammat <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/24 18:15:31 by rthammat          #+#    #+#              #
-#    Updated: 2022/12/24 18:26:29 by rthammat         ###   ########.fr        #
+#    Updated: 2022/12/24 21:12:56 by rthammat         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,9 @@ SRCS = philo_bonus.c \
 	init.c \
 	time.c \
 	check_dead.c \
-	action.c \
+	routine.c \
 	clear.c \
+	process.c \
 
 all: $(NAME)
 
