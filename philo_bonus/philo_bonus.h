@@ -1,5 +1,5 @@
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # define LLONG_MAX 9223372036854775807
 
@@ -27,7 +27,7 @@ typedef struct s_philo
 	sem_t	*fork;
 	sem_t	*detach;
 	sem_t	*print;
-	sem_t	*action;
+	sem_t	*dead;
 	t_input	*input;
 	////////dummy//////////
 	pthread_t	*th;
@@ -47,7 +47,9 @@ typedef struct s_philo
 //philo.c
 void	ft_display(t_philo *ph, unsigned long timestamp, char *s);
 void	*routine(void *arg);
+//utils.c
 int	ft_atoi(const char *str);
+void	check_input(int argc, char **argv);
 //init.c
 void	input_init(t_input *param, int n, char **argv);
  void	init_semaphore(t_philo *ph);

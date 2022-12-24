@@ -6,11 +6,11 @@
 /*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 13:25:14 by rthammat          #+#    #+#             */
-/*   Updated: 2022/12/19 12:05:54 by rthammat         ###   ########.fr       */
+/*   Updated: 2022/12/24 18:13:57 by rthammat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 void	super_sleep(int ms)
 {

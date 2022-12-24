@@ -1,4 +1,16 @@
-#include "philo.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   action.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/24 18:14:13 by rthammat          #+#    #+#             */
+/*   Updated: 2022/12/24 18:26:50 by rthammat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo_bonus.h"
 
 void	ft_eat(t_philo *ph)
 {
@@ -16,7 +28,6 @@ void	ft_eat(t_philo *ph)
 	ph->n_meal += 1;
 	if (ph->n_meal == ph->input->n_eat)
 	{
-		printf("philo %i eat full\n", ph->no);
 		while (++i < ph->input->n_phi)
 			sem_post(ph->detach);
 	}

@@ -1,4 +1,16 @@
-#include "philo.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rthammat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/24 18:04:35 by rthammat          #+#    #+#             */
+/*   Updated: 2022/12/24 18:26:58 by rthammat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo_bonus.h"
 
 void	input_init(t_input *param, int n, char **argv)
 {
@@ -29,13 +41,13 @@ void	init_semaphore(t_philo *ph)
 	sem_unlink("/fork");
 	sem_unlink("/detach");
 	sem_unlink("/print");
-	sem_unlink("/action");
+	sem_unlink("/dead");
 	ph->fork = sem_open("/fork", O_CREAT, 0644, n_phi);
 	ph->detach = sem_open("/detach", O_CREAT, 0644, 0);
 	ph->print = sem_open("/print", O_CREAT, 0644, 1);
-	ph->action = sem_open("/action", O_CREAT, 0644, 0);
+	ph->dead = sem_open("/dead", O_CREAT, 0644, 0);
 	if (ph->fork == SEM_FAILED || ph->detach == SEM_FAILED
-		|| ph->print == SEM_FAILED || ph->action == SEM_FAILED)
+		|| ph->print == SEM_FAILED || ph->dead == SEM_FAILED)
 	{
 		printf("error to initialize semaphore\n");
 		exit(1);
