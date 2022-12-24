@@ -127,8 +127,9 @@ void	fork_process(t_philo *ph)
 		else
 		{
 			ph->child_id[i] = ph->id[i];
-			printf("child id %i\n", ph->child_id[i]);
+			//printf("child id %i\n", ph->child_id[i]);
 		}
+		//usleep(100);
 	}
 	if (i == ph->input->n_phi)
 	{

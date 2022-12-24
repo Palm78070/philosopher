@@ -35,6 +35,7 @@ void	*check_dead(void *arg)
 	{
 		if (is_dead(ph))
 			break ;
+		usleep(10);
 	}
 	if (pthread_detach(ph->th[1]))
 		ft_error(ph, "Error in detach th[1]");
